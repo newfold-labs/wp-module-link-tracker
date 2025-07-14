@@ -12,7 +12,6 @@ if ( function_exists( 'add_action' ) ) {
 					'name'     => 'wp-module-link-tracker',
 					'label'    => 'Link Tracker',
 					'callback' => function ( Container $container ) {
-
 					},
 					'isActive' => true,
 					'isHidden' => true,
