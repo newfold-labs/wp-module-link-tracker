@@ -1,8 +1,9 @@
 <?php
 
-namespace NewfoldLabs\WP\Module\Functions;
+namespace NewfoldLabs\WP\Module\LinkTracker\Functions;
 
 use NewfoldLabs\WP\Module\LinkTracker\LinkTracker;
+
 use function NewfoldLabs\WP\ModuleLoader\container as getContainer;
 
 /**
@@ -12,7 +13,7 @@ use function NewfoldLabs\WP\ModuleLoader\container as getContainer;
  * @param array $params An associative array of query parameters.
  * @return string The complete URL with query parameters.
  */
-function buildlink( string $url, array $params = [] ): string {
+function buildLink( string $url, array $params = [] ): string {
 	// Check if source is passed in params.
 	if ( ! empty( $params['source'] ) ) {
 		$source = $params['source'];
@@ -20,16 +21,17 @@ function buildlink( string $url, array $params = [] ): string {
 	} else {
 		$source = 'no_source';
 	}
-
+	
+	$container = getContainer();
+	
 	$defaultParams = [
-		'channelid'   => strpos( $url, 'wp-admin' ) !== false ? 'P99C100S1N0B3003A151D115E0000V111' : 'P99C100S1N0B3003A151D115E0000V112',
-		'utm_medium'   => 'bluehost_plugin',
+		'channelid'   => strpos($url, 'wp-admin') !== false ? 'P99C100S1N0B3003A151D115E0000V111' : 'P99C100S1N0B3003A151D115E0000V112',
+		'utm_medium'   => $container ? $container->plugin()->get( 'id', 'bluehost' ).'_plugin' : 'bluehost_plugin' ,
 		'utm_campaign' => 'link_tracker',
-		'utm_source'   => $_SERVER['PHP_SELF'] ? $_SERVER['PHP_SELF'] . '?' . $source : $source,
+		'utm_source'   => $_SERVER['PHP_SELF'] ? $_SERVER['PHP_SELF'].'?'. $source  : $source,
 	];
 
 	$params = array_merge( $defaultParams, $params );
-	$container = getContainer();
 	$tracker = new LinkTracker( $container );
 	$url = $tracker->BuildLink( $url, $params );
 	
