@@ -33,7 +33,7 @@ function build_link( string $url, array $params = array() ): string {
 
 	$params  = array_merge( $default_params, $params );
 	$tracker = new LinkTracker( $container );
-	$url     = $tracker->BuildLink( $url, $params );
+	$url     = $tracker->build_link( $url, $params );
 
 	return esc_url( $url );
 }
