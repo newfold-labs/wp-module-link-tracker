@@ -1,0 +1,37 @@
+<?php
+
+namespace NewfoldLabs\WP\Module\Functions;
+
+use NewfoldLabs\WP\Module\LinkTracker\LinkTracker;
+use function NewfoldLabs\WP\ModuleLoader\container as getContainer;
+
+/**
+ * Builds a URL with query parameters.
+ *
+ * @param string $url The URL to which parameters will be appended.
+ * @param array $params An associative array of query parameters.
+ * @return string The complete URL with query parameters.
+ */
+function buildlink( string $url, array $params = [] ): string {
+	// Check if source is passed in params.
+	if ( ! empty( $params['source'] ) ) {
+		$source = $params['source'];
+		unset( $params['source'] );
+	} else {
+		$source = 'no_source';
+	}
+
+	$defaultParams = [
+		'channelid'   => strpos( $url, 'wp-admin' ) !== false ? 'P99C100S1N0B3003A151D115E0000V111' : 'P99C100S1N0B3003A151D115E0000V112',
+		'utm_medium'   => 'bluehost_plugin',
+		'utm_campaign' => 'link_tracker',
+		'utm_source'   => $_SERVER['PHP_SELF'] ? $_SERVER['PHP_SELF'] . '?' . $source : $source,
+	];
+
+	$params = array_merge( $defaultParams, $params );
+	$container = getContainer();
+	$tracker = new LinkTracker( $container );
+	$url = $tracker->BuildLink( $url, $params );
+	
+	return esc_url( $url );
+}
