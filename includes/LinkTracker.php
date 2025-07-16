@@ -23,35 +23,24 @@ class LinkTracker {
 	public function __construct( Container $container ) {
 
 		$this->container = $container;
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ), 99 );
 	}
 
 	/**
-	 * Builds a URL with query parameters.
+	 * Enqueues the JavaScript file for the link tracker.
 	 *
-	 * @param string $url The URL to which parameters will be appended.
-	 * @param array  $params An associative array of query parameters.
-	 * @return string The complete URL with query parameters.
+	 * This method registers and enqueues the JavaScript file that will handle
+	 * the link tracking functionality on the front end.
 	 */
-	public static function build_link( string $url, array $params = array() ): string {
+	public function enqueue_scripts() {
+		wp_register_script(
+			'wp-module-link-tracker',
+			NFD_LINK_TRACKER_BUILD_URL . '/index.js',
+			array(),
+			'1.0.0',
+			true
+		);
 
-		if ( ! empty( $params ) ) {
-			$query     = '';
-			$url_parts = wp_parse_url( $url );
-			if ( empty( $url_parts['query'] ) ) {
-				$url_parts['query'] = '';
-			} else {
-				$query = $url_parts['query'];
-			}
-
-			$query .= '&' . http_build_query( $params, '', '&' );
-			$query  = trim( $query, '&' );
-
-			if ( empty( $url_parts['query'] ) ) {
-				$url .= '?' . $query;
-			} else {
-				$url = str_replace( $url_parts['query'], $query, $url );
-			}
-		}
-		return $url;
+		wp_enqueue_script( 'wp-module-link-tracker' );
 	}
 }
