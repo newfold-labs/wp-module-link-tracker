@@ -26,6 +26,7 @@
   "scripts": {
     "build": "wp-scripts build ./src/index.js --config ./scripts/webpack.config.js",
     "lint": "wp-scripts lint-js ./src/index.js",
+    "lint:js:fix": "wp-scripts lint-js ./src --fix",
     "start": "wp-scripts start ./src/index.js --config ./scripts/webpack.config.js",
     "test:unit": "echo \"No tests implemented\"",
     "test:e2e": "echo \"No tests implemented\""

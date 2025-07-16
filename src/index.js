@@ -1,44 +1,58 @@
-import { addQueryArgs } from "@wordpress/url";
+import { addQueryArgs } from '@wordpress/url';
 /**
  * Newfold Link Tracker
  *
- * This module is responsible for tracking links and adding UTM parameters to URLs.
+ * This section is responsible for tracking links and adding UTM parameters to URLs.
  * It attaches itself to the global NewfoldRuntime object.
- *
- * @module NewfoldLinkTracker
  */
 {
+	const attachLinkTrackerToRuntime = () => {
+		window.NewfoldRuntime.linkTracker = buildLinkTrackerObject();
+	};
 
-    const attachLinkTrackerToRuntime = () => {
-        window.NewfoldRuntime.linkTracker = buildLinkTrackerObject();
-    };
+	const buildLinkTrackerObject = () => {
+		return {
+			addUtmParams,
+		};
+	};
 
-    const buildLinkTrackerObject = () => {
-        return {
-            addUtmParams,
-        };
-    };
+	const addUtmParams = ( url, params = {} ) => {
+		try {
+			const brand = window.NewfoldRuntime?.brand || 'bluehost';
+			const utmSource =
+				window.location.pathname +
+				window.location.search +
+				window.location.hash;
 
-    const addUtmParams =  ( url, params = {} ) => {
-        if ( ! url ) {
-            return url;
-        }
-        if ( ! params ) {
-            params = {};
-        }
+			const defaultParams = {
+				channelid: url.includes( 'wp-admin' )
+					? 'P99C100S1N0B3003A151D115E0000V111'
+					: 'P99C100S1N0B3003A151D115E0000V112',
+				utm_source: utmSource,
+				utm_medium: brand + '_plugin',
+			};
 
-        let brand = window.NewfoldRuntime?.brand || 'bluehost';
-        let utmSource = window.location.pathname + window.location.search + window.location.hash;
+			const urlObj = new URL( url, window.location.origin );
+			const existingParams = {};
+			urlObj.searchParams.forEach( ( value, key ) => {
+				existingParams[ key ] = value;
+			} );
 
-        // Add UTM parameters to the URL
-        params.channelid = params.channelid ? params.channelid: ( url.includes('wp-admin') ? 'P99C100S1N0B3003A151D115E0000V111' : 'P99C100S1N0B3003A151D115E0000V112');
-        params.utm_source = params.utm_source ? params.utm_source : utmSource;
-        params.utm_medium = params.utm_medium ? params.utm_medium : brand+'_plugin';
+			// Merge default parameters with the provided parameters
+			const mergedParams = { ...defaultParams, ...params };
+			Object.keys( existingParams ).forEach( ( key ) => {
+				if ( mergedParams.hasOwnProperty( key ) ) {
+					delete mergedParams[ key ];
+				}
+			} );
 
-        return addQueryArgs(url, params);
-    }
+			return addQueryArgs( url, mergedParams );
+		} catch ( e ) {
+			return url;
+		}
+	};
 
-    window.addEventListener( 'DOMContentLoaded', () => {
-        attachLinkTrackerToRuntime();
-    } );
+	window.addEventListener( 'DOMContentLoaded', () => {
+		attachLinkTrackerToRuntime();
+	} );
 }
