@@ -17,7 +17,11 @@
         ]
     },
   "repositories": {
-    "newfold": {
+    "newfold-labs": {
+            "type": "composer",
+            "url": "https://newfold-labs.github.io/satis"
+        },
+        "newfold": {
       "type": "composer",
       "url": "https://newfold-labs.github.io/satis/",
       "only": [
