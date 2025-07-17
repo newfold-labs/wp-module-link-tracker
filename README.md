@@ -69,13 +69,13 @@ The object exposes the `addUtmParams` function. You can use it like this:
 
 const url = 'https://example.com';
 
-window.NewfoldRuntime.linkTracker.addUtmParams(url, {
-    utm_source: 'newsletter',
-    utm_medium: 'email',
-    utm_campaign: 'spring_sale',
-}).then(trackedUrl => {
-    console.log(trackedUrl); // Outputs: https://example.com/?utm_source=newsletter&utm_medium=email&utm_campaign=spring_sale
-});
+let trackerUrl = window.NewfoldRuntime.linkTracker.addUtmParams(url, {
+        utm_source: 'newsletter',
+        utm_medium: 'email',
+        utm_campaign: 'spring_sale',
+    });
+
+console.log(trackedUrl); // Outputs: https://example.com/?utm_source=newsletter&utm_medium=email&utm_campaign=spring_sale
 ```
 
 If you don't provide any parameters, the function will return the original URL adding default parameters.
@@ -83,9 +83,9 @@ If you don't provide any parameters, the function will return the original URL a
 
 const url = 'https://example.com';
 
-window.NewfoldRuntime.linkTracker.addUtmParams(url).then(trackedUrl => {
-    console.log(trackedUrl); // Outputs: https://example.com/?channelid=P99C100S1N0B3003A151D115E0000V112&utm_source=%2Fwp-admin%2Fadmin.php%3Fpage%3Dbluehost%23%2Fhome&utm_medium=bluehost_plugin   
-});
+
+let trackerUrl = window.NewfoldRuntime.linkTracker.addUtmParams(url);
+console.log(trackedUrl); // Outputs: https://example.com/?channelid=P99C100S1N0B3003A151D115E0000V112&utm_source=%2Fwp-admin%2Fadmin.php%3Fpage%3Dbluehost%23%2Fhome&utm_medium=bluehost_plugin
 ```
 
 
