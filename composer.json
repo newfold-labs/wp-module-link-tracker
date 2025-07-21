@@ -2,10 +2,6 @@
     "name": "newfold-labs/wp-module-link-tracker",
     "description": "A WordPress module that adds tracking params",
     "type": "library",
-    "require": {
-        "php": ">=7.4"
-
-    },
     "license": "GPL-3.0-or-later",
     "autoload": {
         "psr-4": {
@@ -17,11 +13,7 @@
         ]
     },
   "repositories": {
-    "newfold-labs": {
-            "type": "composer",
-            "url": "https://newfold-labs.github.io/satis"
-        },
-        "newfold": {
+      "newfold": {
       "type": "composer",
       "url": "https://newfold-labs.github.io/satis/",
       "only": [
