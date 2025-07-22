@@ -33,18 +33,18 @@ class LinkTracker {
 	 * the link tracking functionality on the front end.
 	 */
 	public function enqueue_scripts() {
-		
+
 		$asset_file = NFD_LINK_TRACKER_BUILD_DIR . '/index.asset.php';
 		if ( is_readable( $asset_file ) ) {
 			$asset = include_once $asset_file;
 		} else {
 			return;
 		}
-		
+
 		wp_register_script(
 			'wp-module-link-tracker',
 			NFD_LINK_TRACKER_BUILD_URL . '/index.js',
-			array_merge( $asset['dependencies'] ,array( 'nfd-runtime' ) ),
+			array_merge( $asset['dependencies'], array( 'nfd-runtime' ) ),
 			$asset['version'],
 			true
 		);
