@@ -24,6 +24,17 @@ import { addQueryArgs } from '@wordpress/url';
 				window.location.search +
 				window.location.hash;
 
+			// Check if the URL is relative or absolute
+			if ( ! url.startsWith( 'http' ) && ! url.startsWith( '/' ) ) {
+				const isInWpAdmin =
+					window.location.pathname.includes( '/wp-admin/' );
+				url = isInWpAdmin
+					? window.location.origin + '/wp-admin/' + url
+					: window.location.origin + '/' + url;
+			}
+
+			const urlObj = new URL( url, window.location.origin );
+
 			const defaultParams = {
 				channelid: url.includes( 'wp-admin' )
 					? 'P99C100S1N0B3003A151D115E0000V111'
@@ -32,7 +43,6 @@ import { addQueryArgs } from '@wordpress/url';
 				utm_medium: brand + '_plugin',
 			};
 
-			const urlObj = new URL( url, window.location.origin );
 			const existingParams = {};
 			urlObj.searchParams.forEach( ( value, key ) => {
 				existingParams[ key ] = value;
