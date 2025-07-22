@@ -12,7 +12,7 @@ use function NewfoldLabs\WP\ModuleLoader\container as getContainer;
  * @return string The complete URL with query parameters.
  */
 function build_link( string $url, $params = array() ) {
-	
+
 	$container = getContainer();
 
 	$source = false;
@@ -22,8 +22,7 @@ function build_link( string $url, $params = array() ) {
 	}
 
 	$parts = wp_parse_url( $url );
-	
-	
+
 	$query_params = array();
 	if ( isset( $parts['query'] ) ) {
 		parse_str( $parts['query'], $query_params );
@@ -51,7 +50,8 @@ function build_link( string $url, $params = array() ) {
 	$base = ( isset( $parts['scheme'] ) ? $parts['scheme'] . '://' : '' ) .
 		( isset( $parts['host'] ) ? $parts['host'] : '' ) .
 		( isset( $parts['port'] ) ? ':' . $parts['port'] : '' ) .
-		( isset( $parts['path'] ) ? $parts['path'] : '' );
+		( isset( $parts['path'] ) ? $parts['path'] : '' ) .
+		( isset( $parts['fragment'] ) ? '#' . $parts['fragment'] : '' );
 
 	$final_url = $base . '?' . http_build_query( $query_params, '', '&' );
 
