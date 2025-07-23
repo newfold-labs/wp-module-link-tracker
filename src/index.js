@@ -1,4 +1,3 @@
-import { addQueryArgs } from '@wordpress/url';
 /**
  * Newfold Link Tracker
  *
@@ -15,6 +14,16 @@ import { addQueryArgs } from '@wordpress/url';
 			addUtmParams,
 		};
 	};
+
+	// Function to add query parameters to a URL while preserving the fragment (hash) part.
+	function addQueryArgsPreserveFragment( url, params ) {
+		const [ baseUrl, fragment ] = url.split( '#', 2 );
+		const urlObj = new URL( baseUrl, window.location.origin );
+		Object.entries( params ).forEach( ( [ key, value ] ) => {
+			urlObj.searchParams.set( key, value );
+		} );
+		return urlObj.toString() + ( fragment ? '#' + fragment : '' );
+	}
 
 	const addUtmParams = ( url, params = {} ) => {
 		try {
@@ -45,7 +54,7 @@ import { addQueryArgs } from '@wordpress/url';
 					: window.location.origin + '/' + url;
 			}
 
-			const urlObj = new URL( url );
+			const urlObj = new URL( url, window.location.origin );
 
 			const defaultParams = {
 				channelid: urlObj.pathname.includes( 'wp-admin' )
@@ -59,7 +68,7 @@ import { addQueryArgs } from '@wordpress/url';
 			urlObj.searchParams.forEach( ( value, key ) => {
 				existingParams[ key ] = value;
 			} );
-			// Merge default parameters with the provided parameters
+
 			const mergedParams = { ...defaultParams, ...params };
 			Object.keys( existingParams ).forEach( ( key ) => {
 				if ( mergedParams.hasOwnProperty( key ) ) {
@@ -67,7 +76,7 @@ import { addQueryArgs } from '@wordpress/url';
 				}
 			} );
 
-			return addQueryArgs( url, mergedParams );
+			return addQueryArgsPreserveFragment( url, mergedParams );
 		} catch ( e ) {
 			return url;
 		}
