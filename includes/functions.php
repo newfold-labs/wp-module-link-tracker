@@ -50,12 +50,12 @@ function build_link( string $url, $params = array() ) {
 	$base = ( isset( $parts['scheme'] ) ? $parts['scheme'] . '://' : '' ) .
 		( isset( $parts['host'] ) ? $parts['host'] : '' ) .
 		( isset( $parts['port'] ) ? ':' . $parts['port'] : '' ) .
-		( isset( $parts['path'] ) ? $parts['path'] : '' ) ;
-		
-	// If the original URL has a fragment, append it to the final URL.
-	$fragment =  ( isset( $parts['fragment'] ) ? '#' . $parts['fragment'] : '' );
+		( isset( $parts['path'] ) ? $parts['path'] : '' );
 
-	$final_url = $base . '?' . http_build_query( $query_params, '', '&' ) . $fragment; ;
+	// If the original URL has a fragment, append it to the final URL.
+	$fragment = ( isset( $parts['fragment'] ) ? '#' . $parts['fragment'] : '' );
+
+	$final_url = $base . '?' . http_build_query( $query_params, '', '&' ) . $fragment;
 
 	return esc_url( $final_url );
 }
