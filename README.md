@@ -61,6 +61,13 @@ $url = 'https://example.com';
 $trackedUrl = buildLink($url);
 echo $trackedUrl; // Outputs: https://example.com/?channelid=P99C100S1N0B3003A151D115E0000V112&utm_source=%2Fwp-admin%2Fadmin.php%3Fpage%3Dbluehost%23%2Fhome&utm_medium=bluehost_plugin   
 ```
+You can also use the hook "nfd_build_url" to your urls. In this way the module will hook and change the URL automatically.
+
+```php
+$tracked_url = apply_filters( 'nfd_build_url', 'https://example.com' ); 
+echo $tracked_url // Outputs: https://example.com/?channelid=P99C100S1N0B3003A151D115E0000V112&utm_source=%2Fwp-admin%2Fadmin.php%3Fpage%3Dbluehost%23%2Fhome&utm_medium=bluehost_plugin
+```
+
 For JavaScript applications, you can use the `NewfoldRuntime.linkTracker` window object.
 
 The object exposes the `addUtmParams` function. You can use it like this:
