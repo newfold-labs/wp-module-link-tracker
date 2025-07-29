@@ -7,7 +7,7 @@ if ( defined( 'NFD_LINK_TRACKER_MODULE_VERSION' ) ) {
 	return;
 }
 
-define( 'NFD_LINK_TRACKER_MODULE_VERSION', '1.0.6' );
+define( 'NFD_LINK_TRACKER_MODULE_VERSION', '1.1.0' );
 
 if ( function_exists( 'add_action' ) ) {
 	add_action(
