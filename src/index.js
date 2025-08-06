@@ -38,7 +38,7 @@
 				return url;
 			}
 
-			const brand = window.NewfoldRuntime?.brand || 'bluehost';
+			const brand = window.NewfoldRuntime?.plugin?.brand || 'bluehost';
 
 			const utmSource =
 				window.location.pathname +
