@@ -46,6 +46,8 @@
 				window.location.hash;
 
 			// Check if the URL is relative or absolute
+			// We use the siteUrl to avoid issues on sites that are located in subdirectories.
+			// Example: https://example.com/website_44554
 			if ( ! url.startsWith( 'http' ) && ! url.startsWith( '/' ) ) {
 				const isInWpAdmin =
 					window.location.pathname.includes( '/wp-admin/' );
