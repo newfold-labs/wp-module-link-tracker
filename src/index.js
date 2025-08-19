@@ -18,7 +18,7 @@
 	// Function to add query parameters to a URL while preserving the fragment (hash) part.
 	function addQueryArgsPreserveFragment( url, params ) {
 		const [ baseUrl, fragment ] = url.split( '#', 2 );
-		const urlObj = new URL( baseUrl, window.location.origin );
+		const urlObj = new URL( baseUrl, window.NewfoldRuntime?.siteUrl );
 		Object.entries( params ).forEach( ( [ key, value ] ) => {
 			urlObj.searchParams.set( key, value );
 		} );
@@ -50,11 +50,11 @@
 				const isInWpAdmin =
 					window.location.pathname.includes( '/wp-admin/' );
 				url = isInWpAdmin
-					? window.location.origin + '/wp-admin/' + url
-					: window.location.origin + '/' + url;
+					? window.NewfoldRuntime?.siteUrl + '/wp-admin/' + url
+					: window.NewfoldRuntime?.siteUrl + '/' + url;
 			}
 
-			const urlObj = new URL( url, window.location.origin );
+			const urlObj = new URL( url, window.NewfoldRuntime?.siteUrl );
 
 			const defaultParams = {
 				channelid: urlObj.pathname.includes( 'wp-admin' )
