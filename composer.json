@@ -29,7 +29,8 @@
     ],
     "require-dev": {
         "newfold-labs/wp-php-standards": "^1.2.5",
-        "wp-cli/i18n-command": "^2.6.5"
+        "wp-cli/i18n-command": "^2.6.5",
+        "10up/wp_mock": "^0.5.0|^1.0.0"
     },
     "config": {
       "allow-plugins": {
@@ -52,6 +53,12 @@
       "@i18n-php",
       "@i18n-json"
     ],
-    "lint": "vendor/bin/phpcs . --standard=phpcs.xml -s"
-  }
+    "lint": "vendor/bin/phpcs . --standard=phpcs.xml -s",
+    "test": [
+      "phpunit --bootstrap tests/phpunit/bootstrap.php"
+    ]
+  },
+    "require": {
+        "newfold-labs/wp-module-loader": "^1.0"
+    }
 }
