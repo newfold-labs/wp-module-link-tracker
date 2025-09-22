@@ -106,7 +106,7 @@ class LinkTracker {
 		}
 		// Merge the default parameters with the provided parameters and clean the empty parameters.
 		$query_params = array_filter(
-			! empty( $params ) ? array_merge( $params, $query_params ) : $query_params,
+			! empty( $params ) ? array_merge( $query_params, $params ) : $query_params,
 			function ( $value ) {
 				return null !== $value && '' !== $value && false !== $value;
 			}
