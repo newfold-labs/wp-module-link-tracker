@@ -19,7 +19,7 @@
     "@wordpress/url": "4.31.0"
   },
   "devDependencies": {
-    "@wordpress/env": "^10.28.0",
+    "@wordpress/env": "^10.35.0",
     "@wordpress/scripts": "^30.24.0",
     "ajv": "^8.17.1"
   },
