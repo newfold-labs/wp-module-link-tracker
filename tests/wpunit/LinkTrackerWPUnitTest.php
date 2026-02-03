@@ -18,22 +18,24 @@ class LinkTrackerWPUnitTest extends \lucatume\WPBrowser\TestCase\WPTestCase {
 	 * @return Container
 	 */
 	private function create_container_mock( $plugin_id = 'bluehost' ) {
-		$plugin = new class( $plugin_id ) {
+		// phpcs:disable Squiz.Commenting.VariableComment.Missing,Squiz.Commenting.FunctionComment.Missing,Universal.NamingConventions.NoReservedKeywordParameterNames -- plugin mock for tests
+		$plugin    = new class( $plugin_id ) {
 			private $id;
 			public function __construct( $id ) {
 				$this->id = $id;
 			}
-			public function get( $key, $default = null ) {
-				return 'id' === $key ? $this->id : $default;
+			public function get( $key, $fallback = null ) {
+				return 'id' === $key ? $this->id : $fallback;
 			}
 		};
+		// phpcs:enable Squiz.Commenting.VariableComment.Missing,Squiz.Commenting.FunctionComment.Missing,Universal.NamingConventions.NoReservedKeywordParameterNames
 		$container = $this->createMock( Container::class );
 		$container->method( 'plugin' )->willReturn( $plugin );
 		return $container;
 	}
 
 	/**
-	 * build_url adds default query params to a URL.
+	 * Build_url adds default query params to a URL.
 	 *
 	 * @return void
 	 */
@@ -41,18 +43,18 @@ class LinkTrackerWPUnitTest extends \lucatume\WPBrowser\TestCase\WPTestCase {
 		$container = $this->create_container_mock( 'bluehost' );
 		$tracker   = new LinkTracker( $container );
 		$_SERVER['PHP_SELF'] = '/wp-admin/index.php';
-		$url = $tracker->build_url( 'https://example.com/page', array() );
+		$url       = $tracker->build_url( 'https://example.com/page', array() );
 		$this->assertStringContainsString( 'channelid=', $url );
 		$this->assertStringContainsString( 'utm_medium=', $url );
 		$this->assertStringContainsString( 'utm_source=', $url );
 		$this->assertStringContainsString( 'example.com', $url );
-		parse_str( (string) parse_url( $url, PHP_URL_QUERY ), $params );
+		parse_str( (string) wp_parse_url( $url, PHP_URL_QUERY ), $params );
 		$this->assertArrayHasKey( 'utm_medium', $params );
 		$this->assertSame( 'bluehost_plugin', $params['utm_medium'] );
 	}
 
 	/**
-	 * build_url merges provided params with defaults.
+	 * Build_url merges provided params with defaults.
 	 *
 	 * @return void
 	 */
@@ -60,29 +62,29 @@ class LinkTrackerWPUnitTest extends \lucatume\WPBrowser\TestCase\WPTestCase {
 		$container = $this->create_container_mock( 'bluehost' );
 		$tracker   = new LinkTracker( $container );
 		$_SERVER['PHP_SELF'] = '/wp-admin/options.php';
-		$url = $tracker->build_url( 'https://example.com/', array( 'custom' => 'value' ) );
-		parse_str( (string) parse_url( $url, PHP_URL_QUERY ), $params );
+		$url       = $tracker->build_url( 'https://example.com/', array( 'custom' => 'value' ) );
+		parse_str( (string) wp_parse_url( $url, PHP_URL_QUERY ), $params );
 		$this->assertSame( 'value', $params['custom'] );
 	}
 
 	/**
-	 * build_url uses different channelid for wp-admin vs front.
+	 * Build_url uses different channelid for wp-admin vs front.
 	 *
 	 * @return void
 	 */
 	public function test_build_url_channelid_wp_admin_vs_front() {
-		$container = $this->create_container_mock( 'bluehost' );
-		$tracker   = new LinkTracker( $container );
+		$container  = $this->create_container_mock( 'bluehost' );
+		$tracker    = new LinkTracker( $container );
 		$_SERVER['PHP_SELF'] = '/wp-admin/index.php';
-		$admin_url = $tracker->build_url( 'https://example.com/wp-admin/', array() );
-		$front_url = $tracker->build_url( 'https://example.com/', array() );
-		parse_str( (string) parse_url( $admin_url, PHP_URL_QUERY ), $admin_params );
-		parse_str( (string) parse_url( $front_url, PHP_URL_QUERY ), $front_params );
+		$admin_url  = $tracker->build_url( 'https://example.com/wp-admin/', array() );
+		$front_url  = $tracker->build_url( 'https://example.com/', array() );
+		parse_str( (string) wp_parse_url( $admin_url, PHP_URL_QUERY ), $admin_params );
+		parse_str( (string) wp_parse_url( $front_url, PHP_URL_QUERY ), $front_params );
 		$this->assertNotSame( $admin_params['channelid'] ?? '', $front_params['channelid'] ?? '' );
 	}
 
 	/**
-	 * add_hooks registers admin_enqueue_scripts and nfd_build_url filter.
+	 * Add_hooks registers admin_enqueue_scripts and nfd_build_url filter.
 	 *
 	 * @return void
 	 */
