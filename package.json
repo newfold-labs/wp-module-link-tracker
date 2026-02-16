@@ -21,7 +21,7 @@
   "devDependencies": {
     "@wordpress/env": "^10.39.0",
     "@wordpress/scripts": "^31.4.0",
-    "ajv": "^8.17.1"
+    "ajv": "^8.18.0"
   },
   "scripts": {
     "build": "wp-scripts build ./src/index.js --config ./scripts/webpack.config.js",
