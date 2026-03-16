@@ -10,6 +10,7 @@ Documentation for wp-module-link-tracker, for **humans** and **AI agents**. Star
 | [getting-started.md](getting-started.md) | Prerequisites, install, and tests. |
 | [integration.md](integration.md) | How to use build_link and the nfd_build_url filter. |
 | [development.md](development.md) | Lint, test, and workflow. |
+| [release.md](release.md) | Release process: use the Newfold Prepare Release workflow. |
 
 ## Quick links
 
