@@ -34,7 +34,7 @@
     "johnpbloch/wordpress": "@stable",
     "lucatume/wp-browser": "*",
     "phpunit/phpcov": "*",
-    "10up/wp_mock": "^0.5.0|^1.0.0"
+    "10up/wp_mock": "^1.1.1"
   },
   "config": {
     "allow-plugins": {
