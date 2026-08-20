@@ -1,6 +1,6 @@
 {
   "name": "@newfold-labs/wp-module-link-tracker",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "description": "A WordPress module that adds tracking params",
   "main": "index.js",
   "private": true,
