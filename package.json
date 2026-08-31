@@ -20,7 +20,7 @@
   },
   "devDependencies": {
     "@wordpress/env": "^11.13.0",
-    "@wordpress/scripts": "^34.1.0",
+    "@wordpress/scripts": "^34.2.0",
     "ajv": "^8.20.0"
   },
   "scripts": {
