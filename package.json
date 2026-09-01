@@ -15,7 +15,7 @@
   },
   "homepage": "https://github.com/newfold-labs/wp-module-link-tracker#readme",
   "dependencies": {
-    "@newfold/wp-module-runtime": "^1.2.2",
+    "@newfold/wp-module-runtime": "^1.2.3",
     "@wordpress/url": "4.54.0"
   },
   "devDependencies": {
